@@ -1,0 +1,22 @@
+{
+    "author": "Government Digital Service",
+    "dependencies": [],
+    "issues_url": "https://github.com/alphagov/puppet-reporter-sentry/issues",
+    "license": "MIT",
+    "name": "alphagov-puppet-reporter-sentry",
+    "operatingsystem_support": [
+        {
+            "operatingsystem": "Ubuntu",
+            "operatingsystemrelease": [
+                "14.04"
+            ]
+        }
+    ],
+    "project_page": "https://github.com/alphagov/puppet-reporter-sentry",
+    "source": "https://github.com/alphagov/puppet-reporter-sentry",
+    "summary": "Module to install a Puppet reporter for Sentry",
+    "tags": [
+        "sentry"
+    ],
+    "version": "0.0.1"
+}
