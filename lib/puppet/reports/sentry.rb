@@ -43,12 +43,20 @@ else
     desc 'Puppet reporter to send failed runs to Sentry'
 
     def process
-      return unless self.status == 'failed'
+      if self.status == 'failed'
+        message = "Puppet run failed on #{self.host}\n\n"
+      elsif self.cached_catalog_status == 'on_failure'
+        message = "Puppet catalog failure on #{self.host}\n\n"
+      else
+        return
+      end
 
       unwanted_log_levels = [:debug, :info, :notice]
       self.logs.reject! { |log_line| unwanted_log_levels.include? log_line.level }
 
-      message = "Puppet run failed on #{self.host}\n" + self.logs.map { |log| log.message }.join("\n\n")
+      # Like log.to_report, but without the timestamp.
+      # The log.source is a must-have for identifying what resource failed.
+      message += self.logs.map { |log| "#{log.source} (#{log.level}): #{log.to_s}" }.join("\n\n")
 
       Raven.capture_message(message, {
         :server_name => self.host,
